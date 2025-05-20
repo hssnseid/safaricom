@@ -31,7 +31,11 @@ public class TransactionService {
             t.setCreatedAt(new Date());
             t.setNarration(transactionDto.getNarration());
             t.setValue(transactionDto.getAmount().toString());
-            t.setStatus("SUCCESS");
+            if (application.getStatus().equals(ApplicationStatus.Submitted)) {
+                t.setStatus("SUCCESS");
+            }else{
+                t.setStatus("FAILED");
+            }
             transactionRepository.save(t);
             return transactionDto;
         } else {
@@ -49,7 +53,6 @@ public class TransactionService {
             return reversalDto;
         }
         return new ReversalDto();
-
-
     }
+
 }
